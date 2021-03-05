@@ -1,0 +1,14 @@
+@import "./reset";
+
+html, body {
+    height: 100%;
+      -webkit-tap-highlight-color:transparent;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      font-size: 14px;
+  }
+  
+body {
+    font-family: Microsoft YaHei, Avenir, Helvetica, Arial, sans-serif;
+    min-width: 768px;
+}

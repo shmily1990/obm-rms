@@ -1,80 +1,85 @@
 <template>
 	<div class="home">
 		<div class="header">
-			<div class="header-left">LOGO | OBM模型</div>
-			<div class="header-right">
-				<a-icon type="user" />:
-				<a-dropdown>
-					<a class="ant-dropdown-link" @click="e => e.preventDefault()">
-						{{ $store.state.userInfo.remarkName }} <a-icon type="down" />
-					</a>
-					<a-menu slot="overlay">
-						<a-menu-item>
-							<div @click="loginOut">退出登录</div>
-						</a-menu-item>
-					</a-menu>
-				</a-dropdown>
+			<div class="logo"><span>LOGO</span> | OBM模型</div>
+			<ul class="nav">
+				<li class="active"><span>官网首页</span></li>
+				<li><span>解决方案</span></li>
+				<li><span>成功案例</span></li>
+				<li><span>科略新闻</span></li>
+				<li><span>招贤纳士</span></li>
+				<li><span>关于我们</span></li>
+			</ul>
+			<div class="sigin">
+				<a-button type="primary" class="sign-up" @click="signUp">免费注册</a-button>
+				<a-button @click="showLogin">立即登录</a-button>
 			</div>
 		</div>
-		<div class="content">
-			<div class="step">
-				<a-steps :current="current">
-					<a-step v-for="item in steps" :key="item.title" :title="item.title" />
-				</a-steps>
-				<div class="steps-content">
-					{{ steps[current].content }}
-				</div>
-			</div>
-		</div>
+		<div class="content"></div>
+		<login :isShow.sync="loginShow" v-if="loginShow == 1"></login>
+		<sigup :isShow.sync="loginShow" v-if="loginShow == 2"></sigup>
 	</div>
 </template>
 <script>
-import { removeToken } from '@/libs/utils'
+import login from '@/views/login/Login.vue'
+import sigup from '@/views/login/Sigup.vue'
 export default {
 	name: 'home',
+	components: {
+		login,
+		sigup
+	},
 	data() {
 		return {
-			current: 0,
-			steps: [
-				{
-					title: 'First',
-					content: 'First-content'
-				},
-				{
-					title: 'Second',
-					content: 'Second-content'
-				},
-				{
-					title: 'Last',
-					content: 'Last-content'
-				}
-			]
+			loginShow: 0
 		}
 	},
 	methods: {
-		loginOut() {
-			removeToken('UserInfo')
-			this.$router.push('/')
+		signUp() {
+			this.loginShow = 2
+		},
+		showLogin() {
+			this.loginShow = 1
 		}
 	},
-	mounted() {
-		console.log(this.$store.state)
-	}
+	mounted() {}
 }
 </script>
 <style lang="scss" scoped>
 .home {
-	background: #f0f0f0;
-	width: 100%;
 	height: 100%;
+	background: #f0f0f0;
 	.header {
-		height: 60px;
+		height: 50px;
 		background: #ffffff;
 		display: flex;
+		padding: 0 50px;
 		justify-content: space-between;
-		font-size: 16px;
-		line-height: 60px;
-		padding: 0 20px;
+		line-height: 50px;
+		.logo {
+			font-size: 16px;
+			span {
+				color: blue;
+				font-weight: bold;
+				font-size: 20px;
+				vertical-align: bottom;
+			}
+		}
+		.nav {
+			display: flex;
+			li {
+				width: 80px;
+				text-align: center;
+			}
+			.active {
+				color: blue;
+			}
+		}
+		.sigin {
+			.sign-up {
+				margin-right: 10px;
+			}
+		}
 	}
 }
 </style>
